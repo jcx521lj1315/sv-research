@@ -80,4 +80,5 @@ static const char *event_names[] =
     "Baxcalibur the Unrivaled",
     "Kommo-o the Unrivaled",
     "Shiny Wo-Chien Spotlight",
+    "Shiny Chien-Pao Spotlight",
 };
