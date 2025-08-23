@@ -79,4 +79,5 @@ static const char *event_names[] =
     "Porygon2 the Unrivaled",
     "Baxcalibur the Unrivaled",
     "Kommo-o the Unrivaled",
+    "Shiny Wo-Chien Spotlight",
 };
