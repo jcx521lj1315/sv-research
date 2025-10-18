@@ -82,4 +82,5 @@ static const char *event_names[] =
     "Shiny Wo-Chien Spotlight",
     "Shiny Chien-Pao Spotlight",
     "Shiny Ting-Lu Spotlight",
+    "Shiny Chi-Yu Spotlight",
 };
