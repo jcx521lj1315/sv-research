@@ -36,6 +36,7 @@ public slots:
     void on_comboBoxEvent_currentIndexChanged(int index);
     void on_comboBoxStage_currentIndexChanged(int index);
     void on_comboBoxStars_currentIndexChanged(int index);
+    void on_comboBoxGame_currentIndexChanged(int index);
     void on_parameterChangeRequested(EncounterEntry entry, int32_t species);
 
 private:
@@ -69,6 +70,7 @@ private:
     const StarsRange& get_allowed_stars(int progress);
     void fix_progress(int stars);
     void set_event_group_visible(bool visibility);
+    void set_mighty_parameters();
 
     Ui::RaidCalcClass ui;
     QSpinBox* min_iv_widgets[6];

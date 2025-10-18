@@ -68,6 +68,12 @@ bool SeedFinder::initialize()
 	{
 		return false;
 	}
+	for (auto &enc_might : encounters_might)
+	{
+		assert(enc_might.size() <= 2);
+		if (enc_might.size() == 1)
+			enc_might.push_back(enc_might.front());
+	}
 	for (int32_t i = 0; i < _countof(event_names); ++i)
 	{
 		GroupInfo &info = event_groups[i];
@@ -314,7 +320,7 @@ const EncounterTera9* SeedFinder::get_encounter(uint32_t seed) const
 	if (stars != 7)
 		return get_encounter_dist(seed);
 	if (!encounters_might[event_id].empty())
-		return &encounters_might[event_id][0];
+		return &encounters_might[event_id][game];
 	return nullptr;
 }
 

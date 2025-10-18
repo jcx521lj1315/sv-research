@@ -701,7 +701,7 @@ void SeedFinder::worker_thread(ThreadData& data)
 		}
 		else
 		{
-			enc = &encounters_might[event_id][0];
+			enc = &encounters_might[event_id][game];
 		}
 		if constexpr ((f_type != EncounterType::Might && (f_species || f_shiny || f_iv || f_advanced)) ||
 					  (f_type == EncounterType::Might && f_advanced))

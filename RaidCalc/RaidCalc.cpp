@@ -425,37 +425,7 @@ void RaidCalc::on_comboBoxStars_currentIndexChanged(int index)
         set_event_group_visible(false);
         if (SeedFinder::is_mighty_event(event_id))
         {
-            finder.game = (Game)ui.comboBoxGame->currentIndex();
-            finder.map_id = ui.comboBoxMap->currentIndex();
-            finder.event_id = event_id;
-            finder.event_group = SeedFinder::get_event_info(event_id)->might.front();
-            finder.stars = ui.comboBoxStars->currentIndex() + 1;
-            finder.stage = ui.comboBoxStage->currentIndex();
-            finder.raid_boost = ui.spinBoxRaidBoost->value();
-            SeedFinder::SeedInfo info = finder.get_seed_info(0);
-            SpeciesFilter filter;
-            filter.value = 0;
-            filter.species = info.species;
-            if (FormUtils::get_forms(info.species).empty())
-                filter.any_form = 1;
-            else
-                filter.form = info.form;
-            select_option(ui.comboBoxSpecies, filter.value);
-            select_option(ui.comboBoxTeraType, info.tera_type + 1);
-            select_option(ui.comboBoxAbility, info.ability);
-            select_option(ui.comboBoxNature, info.nature + 1);
-            ui.comboBoxShiny->setCurrentIndex(info.shiny ? 1 : 2);
-            ui.comboBoxGender->setCurrentIndex(info.gender + 1);
-            for (size_t i = 0; i < _countof(min_iv_widgets); ++i)
-                min_iv_widgets[i]->setValue(info.iv[i]);
-            for (size_t i = 0; i < _countof(max_iv_widgets); ++i)
-                max_iv_widgets[i]->setValue(info.iv[i]);
-            ui.spinBoxMinHeight->setValue(0);
-            ui.spinBoxMinWeight->setValue(0);
-            ui.spinBoxMinScale->setValue(0);
-            ui.spinBoxMaxHeight->setValue(255);
-            ui.spinBoxMaxWeight->setValue(255);
-            ui.spinBoxMaxScale->setValue(255);
+            set_mighty_parameters();
         }
         else
         {
@@ -468,6 +438,14 @@ void RaidCalc::on_comboBoxStars_currentIndexChanged(int index)
     }
     for (auto widget : ui.pokemonGroup->findChildren<QWidget *>(Qt::FindDirectChildrenOnly))
         widget->setEnabled(widgets_might.find(widget) != widgets_might.end() || !is7);
+}
+
+void RaidCalc::on_comboBoxGame_currentIndexChanged(int index)
+{
+    if (SeedFinder::is_mighty_event(ui.comboBoxEvent->currentIndex() - 1))
+    {
+        set_mighty_parameters();
+    }
 }
 
 void RaidCalc::fix_progress(int stars)
@@ -517,4 +495,40 @@ void RaidCalc::on_parameterChangeRequested(EncounterEntry entry, int32_t species
         filter.any_form = 1;
         select_option(ui.comboBoxSpecies, filter.value);
     }
+}
+
+void RaidCalc::set_mighty_parameters()
+{
+    int event_id = ui.comboBoxEvent->currentIndex() - 1;
+    finder.game = (Game)ui.comboBoxGame->currentIndex();
+    finder.map_id = ui.comboBoxMap->currentIndex();
+    finder.event_id = event_id;
+    finder.event_group = SeedFinder::get_event_info(event_id)->might.front();
+    finder.stars = ui.comboBoxStars->currentIndex() + 1;
+    finder.stage = ui.comboBoxStage->currentIndex();
+    finder.raid_boost = ui.spinBoxRaidBoost->value();
+    SeedFinder::SeedInfo info = finder.get_seed_info(0);
+    SpeciesFilter filter;
+    filter.value = 0;
+    filter.species = info.species;
+    if (FormUtils::get_forms(info.species).empty())
+        filter.any_form = 1;
+    else
+        filter.form = info.form;
+    select_option(ui.comboBoxSpecies, filter.value);
+    select_option(ui.comboBoxTeraType, info.tera_type + 1);
+    select_option(ui.comboBoxAbility, info.ability);
+    select_option(ui.comboBoxNature, info.nature + 1);
+    ui.comboBoxShiny->setCurrentIndex(info.shiny ? 1 : 2);
+    ui.comboBoxGender->setCurrentIndex(info.gender + 1);
+    for (size_t i = 0; i < _countof(min_iv_widgets); ++i)
+        min_iv_widgets[i]->setValue(info.iv[i]);
+    for (size_t i = 0; i < _countof(max_iv_widgets); ++i)
+        max_iv_widgets[i]->setValue(info.iv[i]);
+    ui.spinBoxMinHeight->setValue(0);
+    ui.spinBoxMinWeight->setValue(0);
+    ui.spinBoxMinScale->setValue(0);
+    ui.spinBoxMaxHeight->setValue(255);
+    ui.spinBoxMaxWeight->setValue(255);
+    ui.spinBoxMaxScale->setValue(255);
 }
